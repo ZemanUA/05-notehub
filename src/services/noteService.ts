@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Note, NoteTag } from '../types/Note.ts';
+import type { Note, NoteTag } from '../types/note.ts';
 
 export async function FetchNotes(
   query: string = '',
