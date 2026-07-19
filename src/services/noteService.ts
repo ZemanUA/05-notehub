@@ -18,14 +18,23 @@ export async function FetchNotes(
       },
     }
   );
-  console.log(response.data);
   return response.data;
 }
 
-export async function createTask(newNote: Note) {
+interface createdNote {
+  title: string;
+  content: string;
+  tag: string;
+}
+
+export async function createTask(newNote: createdNote) {
   const response = await axios.post<Note>(
     'https://notehub-public.goit.study/api/notes?',
-    newNote
+    newNote,{
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_NOTEHUB_TOKEN}`,
+      },
+    }
   );
   return response.data;
 }

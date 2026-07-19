@@ -14,9 +14,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
 
   // HTTP Request
-  const handleSearch = () => {
-    (useDebouncedCallback(setTopic, 500), setCurrentPage(1));
-  };
+  const handleSearch = (useDebouncedCallback(setTopic, 500));
 
   const { data } = useQuery({
     queryKey: ['notes', topic, currentPage],
