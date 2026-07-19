@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from 'formik';
 import css from './NoteForm.module.css';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createTask } from '../../services/noteService';
+import { createNote } from '../../services/noteService';
 import * as Yup from 'yup';
 
 interface NoteFormProps {
@@ -25,7 +25,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
 
   ////CREATE TASK//////////
   const mutation = useMutation({
-    mutationFn: createTask,
+    mutationFn: createNote,
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
       onClose();

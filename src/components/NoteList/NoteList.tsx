@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteTask } from "../../services/noteService";
+import { deleteNote } from "../../services/noteService";
 import type { Note} from "../../types/note"
 import css from "./NoteList.module.css"
 
@@ -13,7 +13,7 @@ export default function NoteList({notes}:NoteListProps){
 const queryClient = useQueryClient();
 
 const mutation = useMutation({
-  mutationFn: deleteTask,
+  mutationFn: deleteNote,
   onSuccess(){
     queryClient.invalidateQueries({queryKey: ['notes']});
   }
