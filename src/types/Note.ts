@@ -7,7 +7,3 @@ export interface Note {
   tag: string;
 }
 
-export interface NoteTag {
-  notes: Note[];
-  totalPages: number;
-}

@@ -44,9 +44,9 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   ////////////////VALIDATION//////////////
 
   const ValidationSchema = Yup.object().shape({
-    title: Yup.string().required(),
-    content: Yup.string().required(),
-    tag: Yup.string().required(),
+    title: Yup.string().required().min(3).max(50),
+    content: Yup.string().max(500),
+    tag: Yup.string().required().oneOf(['Todo','Work', 'Personal', 'Meeting', 'Shopping']),
   });
   ///////////////////////////////////////
 

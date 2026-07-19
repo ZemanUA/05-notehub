@@ -2,20 +2,19 @@ import css from './Pagination.module.css';
 import ReactPaginateModule from 'react-paginate';
 import type { ReactPaginateProps } from 'react-paginate';
 import type { ComponentType } from 'react';
-import type { NoteTag } from '../../types/note';
 
 type ModuleWithDefault<T> = { default: T };
 
 interface PaginationProps {
-  page: number;
-  changePage: (page: number) => void;
-  dataInfo: NoteTag;
+  currentPage: number;
+  changePage: (currentPage: number) => void;
+  totalPages: number;
 }
 
 export default function Pagination({
-  page,
+  currentPage,
   changePage,
-  dataInfo,
+  totalPages,
 }: PaginationProps) {
   const ReactPaginate = (
     ReactPaginateModule as unknown as ModuleWithDefault<
@@ -23,7 +22,6 @@ export default function Pagination({
     >
   ).default;
 
-  const totalPages = dataInfo?.totalPages ?? 0;
 
   return (
     <>
@@ -35,7 +33,7 @@ export default function Pagination({
         previousLabel={'<-'}
         nextLabel={'->'}
         onPageChange={({ selected }) => changePage(selected + 1)}
-        forcePage={page - 1}
+        forcePage={currentPage - 1}
       />
     </>
   );

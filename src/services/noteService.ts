@@ -1,12 +1,17 @@
 import axios from 'axios';
-import type { Note, NoteTag } from '../types/note.ts';
+import type { Note } from '../types/note';
+
+interface NoteTag {
+  notes: Note[];
+  totalPages: number;
+}
 
 export async function FetchNotes(
   query: string = '',
   currentPage: number
 ): Promise<NoteTag> {
   const response = await axios.get<NoteTag>(
-    `https://notehub-public.goit.study/api/notes?`,
+    `https://notehub-public.goit.study/api/notes/`,
     {
       params: {
         search: query,
@@ -21,15 +26,15 @@ export async function FetchNotes(
   return response.data;
 }
 
-interface createdNote {
+interface CreatedNote {
   title: string;
   content: string;
   tag: string;
 }
 
-export async function createTask(newNote: createdNote) {
+export async function createTask(newNote: CreatedNote):Promise<Note> {
   const response = await axios.post<Note>(
-    'https://notehub-public.goit.study/api/notes?',
+    'https://notehub-public.goit.study/api/notes/',
     newNote,{
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_NOTEHUB_TOKEN}`,
@@ -39,7 +44,7 @@ export async function createTask(newNote: createdNote) {
   return response.data;
 }
 
-export async function deleteTask(taskId: string) {
+export async function deleteTask(taskId: string):Promise<Note> {
   const response = await axios.delete<Note>(
     `https://notehub-public.goit.study/api/notes/${taskId}`,
     {headers: {

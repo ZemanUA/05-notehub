@@ -14,7 +14,8 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
 
   // HTTP Request
-  const handleSearch = (useDebouncedCallback(setTopic, 500));
+  const handleSearch = useDebouncedCallback(setTopic, 500);
+  
 
   const { data } = useQuery({
     queryKey: ['notes', topic, currentPage],
@@ -32,12 +33,12 @@ export default function App() {
     <>
       <div className={css.app}>
         <header className={css.toolbar}>
-          <SearchBox query={topic} onSearch={handleSearch} />
-          {data && (
+          <SearchBox query={topic} onSearch={handleSearch} setPage = {setCurrentPage}/>
+          {data && data.totalPages > 1 && (
             <Pagination
-              page={currentPage}
+              currentPage={currentPage}
               changePage={setCurrentPage}
-              dataInfo={data}
+              totalPages={data.totalPages}
             />
           )}
           <button className={css.button} onClick={openModal}>
