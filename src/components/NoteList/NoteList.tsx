@@ -6,7 +6,6 @@ import css from "./NoteList.module.css"
 
 interface NoteListProps{
   notes: Note[];
-  deleteTask: () => void;
 }
 
 export default function NoteList({notes}:NoteListProps){

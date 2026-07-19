@@ -1,6 +1,5 @@
 import { createPortal } from 'react-dom';
 import css from './Modal.module.css';
-import type { Note } from '../../types/Note';
 
 interface ModalProps {
   children: React.ReactNode;
