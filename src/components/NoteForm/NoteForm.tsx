@@ -1,47 +1,61 @@
-import { Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
+import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from 'formik';
 import css from './NoteForm.module.css';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createTask } from '../../services/noteService';
+import * as Yup from 'yup';
 
 interface NoteFormProps {
   onClose: () => void;
 }
 
 export default function NoteForm({ onClose }: NoteFormProps) {
-
   const queryClient = useQueryClient();
 
-  interface FormValues{
-     title: string
-    content: string,
-    tag: ('Todo'| 'Work' | 'Personal' | 'Meeting' | 'Shopping'),
+  interface FormValues {
+    title: string;
+    content: string;
+    tag: 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping';
   }
 
-  const initialValues : FormValues = {
+  const initialValues: FormValues = {
     title: 'New Task',
     content: '',
     tag: 'Todo',
   };
 
-////CREATE TASK//////////
-const mutation = useMutation({
+  ////CREATE TASK//////////
+  const mutation = useMutation({
     mutationFn: createTask,
     onSuccess() {
-      queryClient.invalidateQueries({ queryKey : ['notes']});
+      queryClient.invalidateQueries({ queryKey: ['notes'] });
       onClose();
-    }
+    },
   });
-/////////////////////////
+  /////////////////////////
 
-  function handleSubmit(values : FormValues, formikHelpers: FormikHelpers<FormValues>) {
+  function handleSubmit(
+    values: FormValues,
+    formikHelpers: FormikHelpers<FormValues>
+  ) {
     mutation.mutate(values);
     formikHelpers.resetForm();
-  };
+  }
 
-  
+  ////////////////VALIDATION//////////////
+
+  const ValidationSchema = Yup.object().shape({
+    title: Yup.string().required(),
+    content: Yup.string().required(),
+    tag: Yup.string().required(),
+  });
+  ///////////////////////////////////////
 
   return (
-    <Formik initialValues={initialValues} onSubmit={(handleSubmit)}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={ValidationSchema}
+    >
       <Form className={css.form}>
         <div className={css.formGroup}>
           <label htmlFor="title">Title</label>

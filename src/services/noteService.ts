@@ -41,7 +41,11 @@ export async function createTask(newNote: createdNote) {
 
 export async function deleteTask(taskId: string) {
   const response = await axios.delete<Note>(
-    `https://notehub-public.goit.study/api/notes?${taskId}`
+    `https://notehub-public.goit.study/api/notes/${taskId}`,
+    {headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_NOTEHUB_TOKEN}`,
+      },
+    }
   );
   return response.data;
 }
