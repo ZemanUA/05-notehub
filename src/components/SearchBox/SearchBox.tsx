@@ -1,11 +1,10 @@
 import css from "./SearchBox.module.css";
 
 interface SearchBoxProps{
-  query: string
   onSearch: (nextSearchQuery : string) => void;
 }
 
-export default function SearchBox({query, onSearch}: SearchBoxProps){
+export default function SearchBox({ onSearch}: SearchBoxProps){
 
 function handleChange(event : React.ChangeEvent<HTMLInputElement>){
 onSearch(event.target.value);
@@ -16,7 +15,6 @@ onSearch(event.target.value);
             className={css.input}
             type="text"
             name="query"
-            defaultValue={query}
             autoComplete="off"
             placeholder="Search notes"
             autoFocus
