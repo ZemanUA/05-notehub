@@ -3,12 +3,15 @@ import css from './NoteForm.module.css';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createNote } from '../../services/noteService';
 import * as Yup from 'yup';
+// import { useEffect } from 'react';
 
 interface NoteFormProps {
   onClose: () => void;
 }
 
 export default function NoteForm({ onClose }: NoteFormProps) {
+
+
   const queryClient = useQueryClient();
 
   interface FormValues {
@@ -23,7 +26,33 @@ export default function NoteForm({ onClose }: NoteFormProps) {
     tag: 'Todo',
   };
 
-  ////CREATE TASK//////////
+  //////CLOSE ON BACKDROP CLICK //////////
+
+  // const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  //   if (event.target === event.currentTarget) {
+  //     onClose();
+  //   }
+  // };
+  
+  // useEffect(() => {
+	//   const handleKeyDown = (e: KeyboardEvent) => {
+	//     if (e.key === "Escape") {
+	//       onClose();
+	//     }
+	//   };
+	
+	//   document.addEventListener("keydown", handleKeyDown);
+  //   document.body.style.overflow = "hidden";
+	
+	//   return () => {
+	//     document.removeEventListener("keydown", handleKeyDown);
+  //     document.body.style.overflow = "";
+	//   };
+	// }, [onClose]);
+
+  ////////////////////////////////////////
+
+  //// MUTATION METOD(POST) CREATE TASK//////////
   const mutation = useMutation({
     mutationFn: createNote,
     onSuccess() {
